@@ -32,13 +32,18 @@ func (h handler) ModifyPoints(w http.ResponseWriter, r *http.Request) {
 	log.Println("current user")
 	log.Println(currentUser)
 
-	// Append to the Books table
-	//if result := h.DB.Create(&book); result.Error != nil {
-	//	fmt.Println(result.Error)
-	//}
+	newPoints := currentUser.Points + user.Points
+	if newPoints >= 0 {
+		currentUser.Points = newPoints
 
-	// Send a 201 created response
-	w.Header().Add("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode("Created")
+		h.DB.Save(&currentUser)
+
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(map[string]string{"status": "update"})
+	} else {
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"status": "failed"})
+	}
 }

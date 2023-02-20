@@ -17,6 +17,7 @@ func main() {
 	router.HandleFunc("/v2/modify-points", h.ModifyPoints).Methods(http.MethodPost)
 	router.HandleFunc("/v2/points", h.GetAllPoints).Methods(http.MethodGet)
 	router.HandleFunc("/v2/points/{id}", h.GetPoint).Methods(http.MethodGet)
+	router.HandleFunc("/v2/health", h.Health).Methods(http.MethodGet)
 	router.HandleFunc("/books", h.GetAllBooks).Methods(http.MethodGet)
 	router.HandleFunc("/books/{id}", h.GetBook).Methods(http.MethodGet)
 	router.HandleFunc("/books", h.AddBook).Methods(http.MethodPost)

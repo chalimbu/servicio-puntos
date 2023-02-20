@@ -5,3 +5,6 @@ insert into public.users ("id","username","password","role","subscribe","points"
 
 locally run
  go run cmd/main.go
+
+como generar la imagen local 
+https://docs.docker.com/language/golang/build-images/

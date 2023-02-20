@@ -18,12 +18,12 @@ func (h handler) ModifyPoints(w http.ResponseWriter, r *http.Request) {
 		log.Fatalln(err)
 	}
 
-	var user models.User
+	var user models.Point
 	json.Unmarshal(body, &user)
 
 	log.Println(user)
 	//get the actual points of the user
-	var currentUser models.User
+	var currentUser models.Point
 
 	if result := h.DB.First(&currentUser, user.Id); result.Error != nil {
 		log.Println(result.Error)

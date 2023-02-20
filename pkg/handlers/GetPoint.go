@@ -16,7 +16,7 @@ func (h handler) GetPoint(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(vars["id"])
 
 	// Find User points
-	var user models.User
+	var user models.Point
 
 	if result := h.DB.First(&user, id); result.Error != nil {
 		fmt.Println(result.Error)

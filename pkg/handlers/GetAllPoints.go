@@ -9,7 +9,7 @@ import (
 )
 
 func (h handler) GetAllPoints(w http.ResponseWriter, r *http.Request) {
-	var users []models.User
+	var users []models.Point
 
 	if result := h.DB.Find(&users); result.Error != nil {
 		fmt.Println(result.Error)

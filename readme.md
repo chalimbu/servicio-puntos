@@ -13,3 +13,6 @@ https://blog.logrocket.com/dockerizing-go-application/
 
 https://gobyexample.com/environment-variables
 run locally DB_PATH=postgres://pg:pass@localhost:5432/crud go run cmd/main.go
+
+
+run docker with enviroment variable docker run -e DB_PATH='postgres://pg:pass@localhost:5432/crud' servicio-punto:v0.0.1

@@ -2,6 +2,7 @@ package db
 
 import (
 	"log"
+	"os"
 
 	"github.com/tutorials/go/crud/pkg/models"
 	"gorm.io/driver/postgres"
@@ -9,7 +10,7 @@ import (
 )
 
 func Init() *gorm.DB {
-	dbURL := "postgres://pg:pass@localhost:5432/crud"
+	dbURL := os.Getenv("DB_PATH")
 
 	db, err := gorm.Open(postgres.Open(dbURL), &gorm.Config{})
 

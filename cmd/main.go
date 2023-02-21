@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	log.Println("Hello, World!")
 	DB := db.Init()
 	h := handlers.New(DB)
 	router := mux.NewRouter()

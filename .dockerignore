@@ -1,0 +1,8 @@
+*
+!cmd 
+!pkg 
+!go 
+!go.mod
+!go.sum
+!main
+!readme.md

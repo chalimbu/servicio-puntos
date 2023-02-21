@@ -1,98 +1,85 @@
-apiVersion: v1 # https://adamtheautomator.com/postgres-to-kubernetes/
+# Create ConfigMap postgres-secret for the postgres app
+#https://adamtheautomator.com/postgres-to-kubernetes/#Deploying_PostgreSQL_to_Kubernetes_Manually
+# Define default database name, user, and password
+apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: postgres-secret
+  name: postgres-secret-servicio-puntos
   labels:
-    app: postgres
+    app: postgres-servicio-puntos
 data:
-  POSTGRES_DB: puntos
-  POSTGRES_USER: sebastian
+  POSTGRES_DB: crud
+  POSTGRES_USER: pg
   POSTGRES_PASSWORD: pass
 ---
 apiVersion: v1
-kind: PersistentVolume # Create PV 
+kind: PersistentVolume # Create a PV
 metadata:
-  name: postgres-volume # Sets PV name
+  name: postgresql-data-servicio-puntos # Sets PV's name
   labels:
-    type: local # Sets PV's type
-    app: postgres
+    type: local # Sets PV's type to local
+    app: postgres-servicio-puntos
 spec:
   storageClassName: manual
   capacity:
-    storage: 300Mi # Sets PV's size
+    storage: 1Gi # Sets PV Volume
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   hostPath:
-    path: "/data/postgresql" # Sets PV's host path
+    path: "/data/postgressql-servicio-puntos" # Sets the volume's path
 ---
+#kubectl get pvc , must show bound
 apiVersion: v1
 kind: PersistentVolumeClaim # Create PVC
 metadata:
-  name: postgres-volume-claim # Sets PVC's name
+  name: postgresql-data-claim-servicio-puntos # Sets name of PV
   labels:
-    app: postgres # Defines app to create PVC for
+    app: postgres-servicio-puntos
 spec:
   storageClassName: manual
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce # Sets read and write access
   resources:
     requests:
-      storage: 300Mi # Sets PVC's size
+      storage: 1Gi # Sets volume size
 ---
 apiVersion: apps/v1
 kind: Deployment # Create a deployment
 metadata:
-  name: postgres # Set the name of the deployment
+  name: postgres-servicio-puntos # Set the name of the deployment
 spec:
   replicas: 1 # Set 3 deployment replicas
   selector:
     matchLabels:
-      app: postgres
+      app: postgres-servicio-puntos
   template:
     metadata:
       labels:
-        app: postgres
+        app: postgres-servicio-puntos
     spec:
       containers:
         - name: postgres
-          image: postgres:11.17-alpine # Docker imagedocker pull postgres:11.17-alpine
+          image: postgres:12.10 # Docker image
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 5432 # Exposing the container port 5432 for PostgreSQL client connections.
           envFrom:
             - configMapRef:
-                name: postgres-secret # Using the ConfigMap postgres-secret
+                name: postgres-secret-servicio-puntos # Using the ConfigMap postgres-secret
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
+            - mountPath: /var/lib/postgresql-servicio-puntos/data
               name: postgresdata
       volumes:
         - name: postgresdata
           persistentVolumeClaim:
-            claimName: postgres-volume-claim
----
-#just to test, connection with dbbeaver
-apiVersion: v1
-kind: Service # Create service
-metadata:
-  name: postgres-out # Sets the service name
-  labels:
-    app: postgres-out # Defines app to create service for
-spec:
-  type: NodePort # Sets the service type
-  ports:
-    - port: 5432 # Sets the port to run the postgres application
-  selector:
-    app: postgres
+            claimName: postgresql-data-claim-servicio-puntos
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres
-  labels:
-    app: postgres
+  name: postgres-servicio-puntos
 spec:
+  selector:
+    app: postgres-servicio-puntos
   ports:
     - port: 5432
-  selector:
-    app: postgres
-  clusterIP: None

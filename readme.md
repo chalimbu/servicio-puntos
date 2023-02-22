@@ -16,3 +16,5 @@ run locally DB_PATH=postgres://pg:pass@localhost:5432/crud go run cmd/main.go
 
 
 run docker with enviroment variable docker run -e DB_PATH='postgres://pg:pass@localhost:5432/crud' servicio-punto:v0.0.1
+
+DB_PATH=postgres://pg:pass@localhost:5432/crud go run cmd/main.go

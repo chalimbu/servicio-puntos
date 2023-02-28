@@ -22,7 +22,7 @@ func (h handler) GetPoint(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(result.Error)
 	}
 	pointsMap := make(map[int]int)
-	pointsMap[user.Id] = user.Points
+	pointsMap[user.IdUser] = user.Points
 
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

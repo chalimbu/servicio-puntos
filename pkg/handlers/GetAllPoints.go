@@ -17,7 +17,7 @@ func (h handler) GetAllPoints(w http.ResponseWriter, r *http.Request) {
 
 	pointsMap := make(map[int]int)
 	for i := 0; i < len(users); i += 1 {
-		pointsMap[users[i].Id] = users[i].Points
+		pointsMap[users[i].IdUser] = users[i].Points
 	}
 
 	w.Header().Add("Content-Type", "application/json")

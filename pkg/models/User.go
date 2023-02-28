@@ -1,6 +1,6 @@
 package models
 
 type Point struct {
-	Id     int `json:"id" gorm:"primaryKey"`
-	Points int `json:"points"`
+	IdUser int `json:"id" gorm:"primaryKey;column:IdUser" `
+	Points int `json:"points gorm:"column:Points"`
 }

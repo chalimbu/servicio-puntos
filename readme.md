@@ -1,7 +1,16 @@
 initial crud from https://www.youtube.com/watch?v=Yk5ZjKq4qDQ
 
 
-insert into public.users ("id","username","password","role","subscribe","points") values(1,'sebastian',null,null,null,5);
+para correr en local
+docker compose up
+y
+DB_PATH=postgres://pg:pass@localhost:5432/crud go run cmd/main.go
+
+
+para correr en kubernetes
+kubectl apply -f kubernetes-resources/database.yml
+kubectl apply -f kubernetes-resources/deployment.yml
+
 
 locally run
  go run cmd/main.go
@@ -17,4 +26,3 @@ run locally DB_PATH=postgres://pg:pass@localhost:5432/crud go run cmd/main.go
 
 run docker with enviroment variable docker run -e DB_PATH='postgres://pg:pass@localhost:5432/crud' servicio-punto:v0.0.1
 
-DB_PATH=postgres://pg:pass@localhost:5432/crud go run cmd/main.go

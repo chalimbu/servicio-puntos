@@ -25,7 +25,7 @@ func (h handler) ModifyPoints(w http.ResponseWriter, r *http.Request) {
 	//get the actual points of the user
 	var currentUser models.Point
 
-	if result := h.DB.First(&currentUser, user.Id); result.Error != nil {
+	if result := h.DB.First(&currentUser, user.IdUser); result.Error != nil {
 		log.Println(result.Error)
 	}
 

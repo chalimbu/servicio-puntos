@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   database:
-    container_name: database
+    container_name: databasepuntos
     image: postgres:12.8
     restart: always
     environment:

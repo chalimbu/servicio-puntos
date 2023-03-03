@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: servicio-puntos
-        image: servicio-puntos:v0.0.2
+        image: servicio-puntos:v0.0.3
         ports:
         - containerPort: 4000
         env:
